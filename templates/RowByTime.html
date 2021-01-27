@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Batch by name</title>
+    <style>
+        th, td {border-bottom: 1px solid #ddd;}
+        th {background-color : #f0f0f0; }
+        tr:hover {background-color: #f0f0f0;}
+        table {table-layout: auto;}
+    </style>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+    <script>
+$(function() {
+  $('input[name="datetimes"]').daterangepicker({
+    timePicker: true,
+    startDate: moment().startOf('hour'),
+    endDate: moment().startOf('hour').add(32, 'hour'),
+    locale: {
+      format: 'YYYY-MM-DD'
+    }
+  });
+});
+$(document).ready( function () {
+    $('#batchtable').DataTable( {
+        "ordering": true});
+    $('#triggertable').DataTable( {
+        "ordering": true});
+} );
+
+
+    </script>
+</head>
+
+<body>
+<ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/BatchByID">BatchByID</a></li>
+    <li><a href="/BatchByName">BatchByBatchname</a></li>
+    <li><a href="/BatchByDropdown">BatchByDropdown</a></li>
+    <li><a href="/RowByTime">RowByTime</a></li>
+</ul>
+<div style="margin: auto;
+  width: 90%;
+  border: 2px solid red;
+  overflow-x:auto;
+  overflow-y:auto;">
+    <form action="/deleteRowByTime" method="post">
+        <input type="text" name="datetimes" id="dateperiod"/>
+        <input type="submit">
+    </form>
+
+
+</div>
+<div style="margin: auto;
+  width: 90%;
+  border: 2px solid red;
+  overflow-x:auto;
+  overflow-y:auto;">
+    <h1>Batch Table</h1>
+    <table id="batchtable">
+        <thead>
+        <tr>
+            {% for name in batch_column_names %}
+            <th>
+                {{ name }}
+            </th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for row in batch_table %}
+        <tr>
+            {% for col in row %}
+            <td>
+                {{ col }}
+            </td>
+            {% endfor %}
+
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<br>
+<div style="margin: auto;
+  width: 90%;
+  border: 2px solid green;
+  overflow-x:auto;
+  overflow-y:auto;">
+    <h1>Trigger Table</h1>
+    <table id="triggertable">
+        <thead>
+        <tr>
+            {% for name in trigger_column_names %}
+            <th>
+                {{ name }}
+            </th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for row in trigger_table %}
+        <tr>
+            {% for col in row %}
+            <td>
+                {{ col }}
+            </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+</body>
+
+</html>

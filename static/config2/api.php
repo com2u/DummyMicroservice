@@ -1,0 +1,1 @@
+{"domains_being_blocked":99867,"dns_queries_today":2275,"ads_blocked_today":422,"ads_percentage_today":18.549450}

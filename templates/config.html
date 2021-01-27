@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DB-Tools Config</title>
+    <style>
+        th, td {border-bottom: 1px solid #ddd;}
+        th {background-color : #f0f0f0; }
+        tr:hover {background-color: #f0f0f0;}
+        table {table-layout: auto;}
+    </style>
+</head>
+<body>
+<ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/config">Config</a></li>
+</ul>
+<div style="margin: auto;
+  width: 90%;
+  border: 2px solid red;
+  overflow-x:auto;
+  overflow-y:auto;">
+    <form action="/saveconfigvalues" method="post">
+        <table style="margin-left: auto; margin-right: auto;">
+            <thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Standard Values</th>
+                <th>User Override</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Servername</td>
+                <td>{{ standard_parameter[0] }}</td>
+                <td><input name="postgres_url" placeholder="{{ user_parameter[0] }}"></td>
+            </tr>
+            <tr>
+                <td>Username</td>
+                <td>{{ standard_parameter[1] }}</td>
+                <td><input name="postgres_user" placeholder="{{ user_parameter[1] }}"></td>
+            </tr>
+            <tr>
+                <td>Pasword</td>
+                <td>*****</td>
+                <td><input type="password" name="postgres_pw" placeholder="password"></td>
+            </tr>
+            <tr>
+                <td>DB-Name</td>
+                <td>{{ standard_parameter[2] }}</td>
+                <td><input name="postgres_db" placeholder="{{ user_parameter[2] }}"></td>
+            </tr>
+            <tr>
+                <td>Limit Table length</td>
+                <td>{{ standard_parameter[3] }}</td>
+                <td><input name="limit_table_length" type="number" placeholder="{{ user_parameter[3] }}"></td>
+            </tr>
+            <tr>
+                <td><button type="submit">Save my values</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+</body>
+</html>

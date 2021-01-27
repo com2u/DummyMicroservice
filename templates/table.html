@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+
+    <script>
+    $(document).ready( function () {
+    $('#batchtable').DataTable();
+} );
+
+
+    </script>
+</head>
+<body>
+<table id="batchtable" class="display">
+    <thead>
+    <tr>
+        {% for name in batch_column_names %}
+        <th>
+            {{ name }}
+        </th>
+        {% endfor %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for row in batch_table %}
+    <tr>
+        {% for name in batch_column_names %}
+        <td>
+            {{ row.batch_inspectionid }}
+        </td>
+        {% endfor %}
+
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+</body>
+</html>

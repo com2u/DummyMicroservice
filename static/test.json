@@ -1,0 +1,12 @@
+{
+    "Heimdall": {
+        "Name": "Test Tile",
+		"Status": "OK",
+		"Connection": "Online",
+		"Ethernet": "eth0",
+		"Action": "Copy",
+		"Diskspace": 2524,
+		"Free": 98,
+		"Progress": 56
+    }
+}

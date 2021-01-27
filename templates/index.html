@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	 <meta http-equiv="refresh" content="5; URL=http://192.168.56.102">
+    <title>BatchTable</title>
+    <style>
+        th, td {border-bottom: 1px solid #ddd;}
+        th {background-color : #f0f0f0; }
+        tr:hover {background-color: #f0f0f0;}
+        table {table-layout: auto;}
+    </style>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+    <script>
+$(document).ready( function () {
+    $('#batchtable').DataTable();
+    $('#triggertable').DataTable();
+} );
+
+
+    </script>
+</head>
+
+<body>
+
+    <h1>Batch Table</h1>
+    <table id="batchtable">
+        <thead>
+        <tr>
+            {% for name in batch_column_names %}
+            <th>
+                {{ name }}
+            </th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for row in batch_table %}
+        <tr onclick="document.location = '/deleteBatchByID/{{ row[0] }}';">
+            {% for name in batch_column_names %}
+            <td>
+                {{ row.batch_inspectionid }}
+            </td>
+            {% endfor %}
+
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</body>
+
+</html>

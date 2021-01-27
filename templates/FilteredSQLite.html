@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Batch</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.flash.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/select/1.1.2/js/dataTables.select.min.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.1.2/css/select.dataTables.min.css">
+
+    <script>
+        $(document).ready(function () {
+            var oTable = $('#batchtable').DataTable({
+                dom: 'Bfrtip',
+                buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+            });
+            $('#triggertable').DataTable();
+            $('#batchtable tbody').on('click', 'tr', function () {
+                $(this).toggleClass('selected');
+            });
+            $("#btnName").on("click", function () {
+                var oAll = [];
+                $('#batchtable tbody tr.selected').each(function () {
+                    var pos = oTable.row(this).index();
+                    var row = oTable.row(pos).data();
+                    var id_name = row[1];
+                    oAll.push(id_name);
+                });
+                var conf = confirm("Do you want to delete the folowing Names? \n" + oAll);
+                if (conf == false) {
+                    alert("No Data has been Deleted")
+                }
+                if (conf == true) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/delete_batch_name_array_sqlite",
+                        data: { 'data': JSON.stringify(oAll) }
+                    });
+                    location.reload();
+                }
+            });
+            $("#btnID").on("click", function () {
+                var oAll = [];
+                $('#batchtable tbody tr.selected').each(function () {
+                    var pos = oTable.row(this).index();
+                    var row = oTable.row(pos).data();
+                    console.log(row);
+                    var id_name = row[0];
+                    oAll.push(id_name);
+                });
+                var conf = confirm("Do you want to delete the folowing IDs? \n" + oAll);
+                if (conf == false) {
+                    alert("No Data has been Deleted")
+                }
+                if (conf == true) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/delete_batchid_array_sqlite",
+                        data: { 'data': JSON.stringify(oAll) }
+                    });
+                    location.reload();
+                }
+            });
+            $("#btnbetweenids").on("click", function () {
+                var oAll = [];
+                $('#batchtable tbody tr.selected').each(function () {
+                    var pos = oTable.row(this).index();
+                    var row = oTable.row(pos).data();
+                    var id_name = row[0];
+                    oAll.push(id_name);
+                });
+                if (oAll.length > 1) {
+                    var conf = confirm("Do you want to delete the batches between the following IDs? \n" + oAll);
+                    if (conf == false) {
+                        alert("No Data has been Deleted")
+                    }
+                    if (conf == true) {
+                        $.ajax({
+                            type: "POST",
+                            url: "/delete_between_ids_sqlite",
+                            data: { 'data': JSON.stringify(oAll) }
+                        });
+                        location.reload();
+                    }
+                }
+                else {
+                    alert("Please select 2 or more Values")
+                }
+            });
+
+        });
+
+
+
+
+
+    </script>
+</head>
+
+<body>
+<ul>
+    <li><a href="/">Home</a></li>
+</ul>
+<div style="margin: auto;
+  width: 100%;
+  overflow-x:auto;
+  overflow-y:auto;">
+    <button type="button" id="btnID">Delete By ID</button>
+    <button type="button" id="btnName">Delete By Name</button>
+    <button type="button" id="btnbetweenids">Delete between min and max id</button>
+    <h1>Batch Table</h1>
+    <table id="batchtable" class="display DataTable" style="width:100%">
+        <thead>
+        <tr>
+            <th>batch_inspectionid</th>
+            <th>batchname</th>
+            <th>batchstart</th>
+            <th>comment</th>
+            <th>data1</th>
+            <th>data2</th>
+            <th>data3</th>
+            <th>data4</th>
+            <th>headerid</th>
+            <th>inspectionname</th>
+            <th>machinenum</th>
+            <th>machinetype</th>
+            <th>productionspeed</th>
+            <th>sectioncomment</th>
+            <th>sectionid</th>
+            <th>sectionname</th>
+            <th>svimname</th>
+            <th>timestamp</th>
+            <th>username</th>
+            <th>vdata1</th>
+            <th>vdata2</th>
+            <th>vdata3</th>
+            <th>vdata4</th>
+            <th>vdata5</th>
+            <th>vdata6</th>
+            <th>vdata7</th>
+            <th>vdata8</th>
+            <th>vdata9</th>
+            <th>vdata10</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for batch_object in batch_table %}
+        <tr>
+            <td>{{batch_object.batch_inspectionid}}</td>
+            <td>{{batch_object.batchname}}</td>
+            <td>{{batch_object.batchstart}}</td>
+            <td>{{batch_object.comment}}</td>
+            <td>{{batch_object.data1}}</td>
+            <td>{{batch_object.data2}}</td>
+            <td>{{batch_object.data3}}</td>
+            <td>{{batch_object.data4}}</td>
+            <td>{{batch_object.headerid}}</td>
+            <td>{{batch_object.inspectionname}}</td>
+            <td>{{batch_object.machinenum}}</td>
+            <td>{{batch_object.machinetype}}</td>
+            <td>{{batch_object.productionspeed}}</td>
+            <td>{{batch_object.sectioncomment}}</td>
+            <td>{{batch_object.sectionid}}</td>
+            <td>{{batch_object.sectionname}}</td>
+            <td>{{batch_object.svimname}}</td>
+            <td>{{batch_object.timestamp}}</td>
+            <td>{{batch_object.username}}
+            <td>{{batch_object.vdata1}}</td>
+            <td>{{batch_object.vdata2}}</td>
+            <td>{{batch_object.vdata3}}</td>
+            <td>{{batch_object.vdata4}}</td>
+            <td>{{batch_object.vdata5}}</td>
+            <td>{{batch_object.vdata6}}</td>
+            <td>{{batch_object.vdata7}}</td>
+            <td>{{batch_object.vdata8}}</td>
+            <td>{{batch_object.vdata9}}</td>
+            <td>{{batch_object.vdata10}}</td>
+        </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+<br>
+</body>
+
+</html>
